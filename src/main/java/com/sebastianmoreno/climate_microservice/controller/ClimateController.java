@@ -1,13 +1,24 @@
 package com.sebastianmoreno.climate_microservice.controller;
 
+import com.sebastianmoreno.climate_microservice.model.ClimateResponseDTO;
+import com.sebastianmoreno.climate_microservice.service.ClimateService;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping("/api/v1/climate")
 public class ClimateController {
 
-    @GetMapping("/health")
-    public String health() {
-        return "OK";
+    private final ClimateService climateService;
+
+    public ClimateController(ClimateService climateService) {
+        this.climateService = climateService;
+    }
+
+    @GetMapping("/status")
+    public ClimateResponseDTO status() {
+        return climateService.getStatus();
     }
 }
+
