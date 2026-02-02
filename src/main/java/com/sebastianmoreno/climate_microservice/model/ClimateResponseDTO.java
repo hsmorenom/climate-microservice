@@ -10,7 +10,7 @@ public class ClimateResponseDTO {
     private double temperaturaMediaC;
     private double evapotranspiracionMm;
     private LocalDate fechaRegistro;
-    private String InterpretacionTecnica;
+    private String interpretacionTecnica;
 
     //Constructor Vacio que lo necesita SpringBoot
     public ClimateResponseDTO(){
@@ -27,7 +27,7 @@ public class ClimateResponseDTO {
         this.temperaturaMediaC = temperaturaMediaC;
         this.evapotranspiracionMm = evapotranspiracionMm;
         this.fechaRegistro = fechaRegistro;
-        InterpretacionTecnica = interpretacionTecnica;
+        this.interpretacionTecnica = interpretacionTecnica;
     }
 
     //Getters y Setters de las variables
@@ -89,10 +89,10 @@ public class ClimateResponseDTO {
     }
 
     public String getInterpretacionTecnica() {
-        return InterpretacionTecnica;
+        return interpretacionTecnica;
     }
 
     public void setInterpretacionTecnica(String interpretacionTecnica) {
-        InterpretacionTecnica = interpretacionTecnica;
+        this.interpretacionTecnica = interpretacionTecnica;
     }
 }

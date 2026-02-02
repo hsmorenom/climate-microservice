@@ -3,6 +3,7 @@ package com.sebastianmoreno.climate_microservice.controller;
 import com.sebastianmoreno.climate_microservice.model.ClimateResponseDTO;
 import com.sebastianmoreno.climate_microservice.service.ClimateService;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,9 +17,9 @@ public class ClimateController {
         this.climateService = climateService;
     }
 
-    @GetMapping("/status")
-    public ClimateResponseDTO status() {
-        return climateService.getStatus();
-    }
+    @GetMapping("/{ciudad}")
+    public ClimateResponseDTO getClimateReport(@PathVariable String ciudad) {
+        return climateService.getClimateReport(ciudad);
+    };
 }
 
