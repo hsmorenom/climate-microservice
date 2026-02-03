@@ -7,25 +7,42 @@ import java.time.LocalDate;
 
 @Service
 public class ClimateService {
-    public ClimateResponseDTO getClimateReport(String ciudad){
-        //Simulación de datos obtenidos de API
-        double precipitacion = 120.5;
-        double temperatura = 13.8;
-        double evapotranspiracion = 45.2;
+    private final PrecipitacionService precipitacionService;
+
+    //Constructor
+    public ClimateService(PrecipitacionService precipitacionService) {
+        this.precipitacionService = precipitacionService;
+    }
+
+    public ClimateResponseDTO getClimateReport(String municipio) {
+
+        double precipitacionPromedio =
+                precipitacionService.getPrecipitationByMunicipio(municipio);
+
+        // Por ahora valores simulados (luego los podemos obtener de otra API)
+        String departamento=precipitacionService.getDepartamentoByMunicipio(municipio);
+        double temperatura = 14.0;
+        double evapotranspiracion = 40.0;
 
         String interpretacion;
-        //Simulacion de interpretación de datos
-        if(precipitacion>100){
-            interpretacion = "Alta precipitación: posible riesgo de saturación hídrica en suelos.";
-        } else{
-            interpretacion ="Precipitación moderada: condiciones estables para cultivos.";
+
+        if (precipitacionPromedio > 100) {
+            interpretacion =
+                    "Alta precipitación: posible riesgo de saturación hídrica.";
+        } else {
+            interpretacion =
+                    "Precipitación moderada: condiciones estables.";
         }
 
-        //Construccion de modelo limpio de dto
-        ClimateResponseDTO dto=new ClimateResponseDTO(
-                "Estación El Dorado",ciudad,"Cundinamarca",precipitacion,temperatura,evapotranspiracion,
-                LocalDate.now(),interpretacion
+        return new ClimateResponseDTO(
+                "Estación IDEAM",
+                municipio,
+                departamento,
+                precipitacionPromedio,
+                temperatura,
+                evapotranspiracion,
+                LocalDate.now(),
+                interpretacion
         );
-        return dto;
     }
 }

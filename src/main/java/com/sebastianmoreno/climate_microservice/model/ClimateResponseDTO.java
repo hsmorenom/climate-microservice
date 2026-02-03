@@ -3,8 +3,9 @@ package com.sebastianmoreno.climate_microservice.model;
 import java.time.LocalDate;
 
 public class ClimateResponseDTO {
+
     private String estacion;
-    private String ciudad;
+    private String municipio;
     private String departamento;
     private double precipitacionMensualMm;
     private double temperaturaMediaC;
@@ -17,11 +18,12 @@ public class ClimateResponseDTO {
 
     }
     //Constructor de las variables
-    public ClimateResponseDTO(String estacion, String ciudad, String departamento, double precipitacionMensualMm,
+
+    public ClimateResponseDTO(String estacion, String municipio, String departamento, double precipitacionMensualMm,
                               double temperaturaMediaC, double evapotranspiracionMm, LocalDate fechaRegistro,
                               String interpretacionTecnica) {
         this.estacion = estacion;
-        this.ciudad = ciudad;
+        this.municipio = municipio;
         this.departamento = departamento;
         this.precipitacionMensualMm = precipitacionMensualMm;
         this.temperaturaMediaC = temperaturaMediaC;
@@ -40,12 +42,12 @@ public class ClimateResponseDTO {
         this.estacion = estacion;
     }
 
-    public String getCiudad() {
-        return ciudad;
+    public String getMunicipio() {
+        return municipio;
     }
 
-    public void setCiudad(String ciudad) {
-        this.ciudad = ciudad;
+    public void setMunicipio(String municipio) {
+        this.municipio = municipio;
     }
 
     public String getDepartamento() {

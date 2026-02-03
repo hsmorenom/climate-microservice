@@ -17,9 +17,9 @@ public class ClimateController {
         this.climateService = climateService;
     }
 
-    @GetMapping("/{ciudad}")
-    public ClimateResponseDTO getClimateReport(@PathVariable String ciudad) {
-        return climateService.getClimateReport(ciudad);
+    @GetMapping("/{municipio}")
+    public ClimateResponseDTO getClimateReport(@PathVariable String municipio) {
+        return climateService.getClimateReport(municipio);
     };
 }
 
