@@ -8,30 +8,46 @@ import java.time.LocalDate;
 @Service
 public class ClimateService {
     private final PrecipitacionService precipitacionService;
+    private final TemperaturaService temperaturaService;
 
     //Constructor
-    public ClimateService(PrecipitacionService precipitacionService) {
+    public ClimateService(PrecipitacionService precipitacionService, TemperaturaService temperaturaService) {
         this.precipitacionService = precipitacionService;
+        this.temperaturaService = temperaturaService;
     }
 
     public ClimateResponseDTO getClimateReport(String municipio) {
 
         double precipitacionPromedio =
                 precipitacionService.getPrecipitationByMunicipio(municipio);
+        String departamento;
 
-        // Por ahora valores simulados (luego los podemos obtener de otra API)
-        String departamento=precipitacionService.getDepartamentoByMunicipio(municipio);
-        double temperatura = 14.0;
-        double evapotranspiracion = 40.0;
+        if(precipitacionService.getDepartamentoByMunicipio(municipio)==null){
+            departamento= temperaturaService.getDepartamentoByMunicipio(municipio);
+        }else{
+            departamento= precipitacionService.getDepartamentoByMunicipio(municipio);
+        };
 
-        String interpretacion;
+        double temperatura = temperaturaService.getTemperatureByMunicipio(municipio);
+        double evapotranspiracion = calcularEvapotranspiracion(temperatura,precipitacionPromedio);
+
+        String interpretacionPrecipitacion;
 
         if (precipitacionPromedio > 100) {
-            interpretacion =
+            interpretacionPrecipitacion =
                     "Alta precipitación: posible riesgo de saturación hídrica.";
         } else {
-            interpretacion =
+            interpretacionPrecipitacion =
                     "Precipitación moderada: condiciones estables.";
+        }
+
+        String interpretacionTemperatura;
+        if(temperatura>=20 && temperatura<=25){
+            interpretacionTemperatura= "Temperatura ambiente: medición confortable para el ser humano";
+        }else if(temperatura <20){
+            interpretacionTemperatura= "Temperatura de clima frio";
+        }else{
+            interpretacionTemperatura="Temperatura de clima calido";
         }
 
         return new ClimateResponseDTO(
@@ -42,7 +58,14 @@ public class ClimateService {
                 temperatura,
                 evapotranspiracion,
                 LocalDate.now(),
-                interpretacion
+                interpretacionPrecipitacion,
+                interpretacionTemperatura
         );
     }
+
+    private double calcularEvapotranspiracion(double temperatura, double precipitacion) {
+        // Fórmula simplificada tipo ingeniería ambiental
+        return (0.6 * temperatura) + (0.2 * precipitacion);
+    }
+
 }
