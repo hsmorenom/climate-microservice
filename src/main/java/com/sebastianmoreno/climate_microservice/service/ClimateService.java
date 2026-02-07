@@ -1,5 +1,6 @@
 package com.sebastianmoreno.climate_microservice.service;
 
+import com.sebastianmoreno.climate_microservice.exception.MunicipioNotFoundException;
 import com.sebastianmoreno.climate_microservice.model.ClimateResponseDTO;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,10 @@ public class ClimateService {
 
         double precipitacionPromedio =
                 precipitacionService.getPrecipitationByMunicipio(municipio);
+
+        if (!precipitacionService.existsMunicipio(municipio)) {
+            throw new MunicipioNotFoundException(municipio);
+        }
         String departamento;
 
         if(precipitacionService.getDepartamentoByMunicipio(municipio)==null){
@@ -29,6 +34,10 @@ public class ClimateService {
         };
 
         double temperatura = temperaturaService.getTemperatureByMunicipio(municipio);
+
+        if (!temperaturaService.existsMunicipio(municipio)) {
+            throw new MunicipioNotFoundException(municipio);
+        }
         double evapotranspiracion = calcularEvapotranspiracion(temperatura,precipitacionPromedio);
 
         String interpretacionPrecipitacion;

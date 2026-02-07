@@ -93,4 +93,25 @@ public class PrecipitacionService {
         Pattern patron = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
         return patron.matcher(normalizado).replaceAll("");
     }
+
+    //Manejo de errores al no encontrar el municipio en el API
+    public boolean existsMunicipio(String municipio) {
+        PrecipitacionDTO[] response =
+                restTemplate.getForObject(API_URL, PrecipitacionDTO[].class);
+
+        if (response == null) {
+            return false;
+        }
+
+        String buscado = limpiarAcentos(municipio.toLowerCase());
+
+        for (PrecipitacionDTO registro : response) {
+            if (registro.getMunicipio() != null &&
+                    limpiarAcentos(registro.getMunicipio().toLowerCase()).contains(buscado)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
