@@ -20,6 +20,14 @@ public class GlobalExceptionHandler {
     }
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Map<String,String>> handleGeneralError(Exception ex){
+
+        // Si el error viene de Swagger o SpringDoc, lo dejamos pasar
+        String msg = ex.getClass().getName();
+
+        if (msg.contains("springdoc") || msg.contains("swagger")) {
+            throw new RuntimeException(ex); // deja que Spring lo maneje
+        }
+
         return new ResponseEntity<>(
                 Map.of("error","error interno del servidor"),
                 HttpStatus.INTERNAL_SERVER_ERROR

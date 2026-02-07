@@ -38,7 +38,7 @@ public class ClimateService {
         if (!temperaturaService.existsMunicipio(municipio)) {
             throw new MunicipioNotFoundException(municipio);
         }
-        double evapotranspiracion = calcularEvapotranspiracion(temperatura,precipitacionPromedio);
+        double evapotranspiracion = calcularEvapotranspiracion(temperatura);
 
         String interpretacionPrecipitacion;
 
@@ -62,9 +62,9 @@ public class ClimateService {
         return new ClimateResponseDTO(
                 "Estación IDEAM",
                 municipio,
-                departamento,
-                precipitacionPromedio,
-                temperatura,
+                departamento,"mm",
+                precipitacionPromedio,"°C",
+                temperatura,"mm/dia",
                 evapotranspiracion,
                 LocalDate.now(),
                 interpretacionPrecipitacion,
@@ -72,9 +72,17 @@ public class ClimateService {
         );
     }
 
-    private double calcularEvapotranspiracion(double temperatura, double precipitacion) {
+    private double calcularEvapotranspiracion(double temperatura) {
         // Fórmula simplificada tipo ingeniería ambiental
-        return (0.6 * temperatura) + (0.2 * precipitacion);
+        if (temperatura <= 0) {
+            return 0;
+        }
+
+        // Thornthwaite simplificado (ETP mensual aproximada en mm)
+        double etpMensual = 16 * Math.pow((10 * temperatura / 100), 1.514);
+
+        // Lo conviertes a mm/día para que coincida con tu unidad actual
+        return etpMensual / 30.0;
     }
 
 }

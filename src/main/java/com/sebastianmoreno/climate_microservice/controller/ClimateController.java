@@ -2,7 +2,6 @@ package com.sebastianmoreno.climate_microservice.controller;
 
 import com.sebastianmoreno.climate_microservice.model.ClimateResponseDTO;
 import com.sebastianmoreno.climate_microservice.service.ClimateService;
-import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,7 +20,6 @@ public class ClimateController {
         this.climateService = climateService;
     }
 
-    @Operation(summary = "Obtener reporte climático y evapotranspiración por municipio")
     @GetMapping("/{municipio}")
     public ClimateResponseDTO getClimateReport(@PathVariable String municipio) {
         return climateService.getClimateReport(municipio);
