@@ -22,15 +22,7 @@ Proveer un **endpoint REST por municipio** que:
 
 Esta arquitectura separa responsabilidades y facilita mantenimiento, pruebas y escalabilidad.
 
-PrecipitacionService → datos IDEAM (s54a-sgyg.json)
-TemperaturaService → datos IDEAM (sbwg-7ju4.json)
-↓
-ClimateService
-(integra + calcula evapotranspiración)
-↓
-ClimateController
-↓
-ClimateResponseDTO
+![Diagrama de arquitectura](images/Architecture chart.png)
 
 ---
 
