@@ -79,7 +79,7 @@ Se utiliza una versión simplificada del método de Thornthwaite, adecuada cuand
 
 ---
 
-##⚠️ Manejo de errores
+## ⚠️ Manejo de errores
 
 Si el municipio no existe en los datos del IDEAM, el servicio retorna:
 404 NOT FOUND
@@ -98,7 +98,7 @@ Esto se gestiona mediante:
 
 ---
 
-###🧪 Cómo ejecutar el proyecto
+### 🧪 Cómo ejecutar el proyecto
 
 1. Clona el repositorio
 2. Abre con IntelliJ IDEA o VS Code
