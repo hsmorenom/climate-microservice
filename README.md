@@ -22,7 +22,7 @@ Proveer un **endpoint REST por municipio** que:
 
 Esta arquitectura separa responsabilidades y facilita mantenimiento, pruebas y escalabilidad.
 
-![Diagrama de arquitectura](images/Architecture chart.png)
+![Diagrama de arquitectura](images/Architecture-chart.png)
 
 ---
 
